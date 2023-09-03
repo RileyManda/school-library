@@ -25,20 +25,21 @@
 
 # 📖 Schoollibrary <a name="about-project"></a>
 
-**Schoollibrary** is a Ruby project that
+**Schoollibrary** is A simple ruby school library application that utilizes classes and relationships between the classes to manage students and library book rentals.
 
 ## 🛠 Built With <a name="built-with"></a>
 
 ### Tech Stack <a name="tech-stack"></a>
 
-- Ruby
+> Ruby
 
 <!-- Features -->
 
 ### Key Features <a name="key-features"></a>
 
-- Custom implementation of the `each` method for the `MyList` class.
-- Custom implementations for `all?`, `any?`, and `filter` methods in the `Schoollibrary` module.
+> Person class
+> Student class
+> Teacher class
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -46,26 +47,14 @@
 
 ## Getting Started
 
-1. Create an instance of the `MyList` class.
-2. Utilize the custom methods from the `Schoollibrary` module to work with the list.
-3. Test your code using the provided examples.
-
 ```ruby
-require_relative 'my_list'
-
-# Create our list
-list = MyList.new(1, 2, 3, 4)
-
-# Test #all?
-puts list.all? { |e| e < 5 }  # Should output: true
-puts list.all? { |e| e > 5 }  # Should output: false
-
-# Test #any?
-puts list.any? { |e| e == 2 }  # Should output: true
-puts list.any? { |e| e == 5 }  # Should output: false
-
-# Test #filter
-puts list.filter(&:even?).inspect  # Should output: [2, 4]
+git clone https://github.com/RileyManda/school-library.git
+```
+```ruby
+cd school-library
+```
+```ruby
+ruby main.rb
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -86,7 +75,7 @@ puts list.filter(&:even?).inspect  # Should output: [2, 4]
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- **Add additional custom methods for Schoollibrary**
+- **Create basic ui**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -95,7 +84,6 @@ puts list.filter(&:even?).inspect  # Should output: [2, 4]
 ## 🤝 Contributing <a name="contributing"></a>
 
 Contributions, issues, and feature requests are welcome!
-
 Feel free to check the [issues page](https://github.com/ClarenceAtim/Enumerable/issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
