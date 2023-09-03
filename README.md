@@ -100,7 +100,7 @@ If you like this project you can share this project to your friend
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-I would like to thank microverse for this project
+I would like to express my sincere gratitude to Microverse, the dedicated reviewers, and collaborators. Your unwavering support, feedback, and collaborative efforts have played an immense role in making this journey a resounding success. I am truly grateful for your contributions and for being an integral part of my achievements and growth as a Software Engineer.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -108,6 +108,5 @@ I would like to thank microverse for this project
 
 ## 📝 License <a name="license"></a>
 
-This project is licensed under the [MIT License](./LICENSE).
-
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
