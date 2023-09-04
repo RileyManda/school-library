@@ -1,9 +1,10 @@
 require_relative 'nameable'
+require 'securerandom'
 class Person < Nameable
   attr_reader :id
   attr_accessor :name, :age, :rentals
 
-  def initialize(age, name = 'Unknown', parent_permission: true)
+  def initialize(id, age, name = 'Unknown', parent_permission: true)
     super()
     @id = id
     @name = name
@@ -29,4 +30,9 @@ class Person < Nameable
     rentals << rental
     rental
   end
+
+   def generate_id
+    SecureRandom.uuid
+  end
+
 end
