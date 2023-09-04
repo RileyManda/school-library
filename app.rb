@@ -23,40 +23,19 @@ class App
     end
   end
 
-def create_person
-  puts "Is the person a Student(1) or a Teacher(2)? (Input the number)"
-  type = gets.chomp.to_i
+  def create_person
+    puts 'Is the person a Student(1) or a Teacher(2)? (Input the number)'
+    type = gets.chomp.to_i
 
-  case type
-  when 1
-    puts "Enter student's name:"
-    name = gets.chomp
-    puts "Enter student's age:"
-    age = gets.chomp.to_i
-    puts "Is parent permission required? (y/n)"
-    parent_permission = gets.chomp.downcase == 'y'
-    student = Student.new(age, name, parent_permission: parent_permission)
-    @people << student
-    puts "Student created with ID: #{student.id}"
-  when 2
-    puts "Enter teacher's name:"
-    name = gets.chomp
-    puts "Enter teacher's age:"
-    age = gets.chomp.to_i
-    puts "Enter teacher's specialization:"
-    specialization = gets.chomp
-    teacher = Teacher.new(age, name, specialization)
-    @people << teacher
-    puts "Teacher created with ID: #{teacher.id}"
-  else
-    puts "Invalid option. Person creation failed."
+    case type
+    when 1
+      create_student
+    when 2
+      create_teacher
+    else
+      puts 'Invalid option. Person creation failed.'
+    end
   end
-end
-
-
-
-
-
 
   def create_book
     puts "Enter book's title:"
@@ -70,45 +49,26 @@ end
   end
 
   def create_rental
-  if @people.empty?
-    puts "No people available to create a rental for."
-    return
+    if @people.empty?
+      puts 'No people available to create a rental for.'
+      return
+    end
+
+    if @books.empty?
+      puts 'No books available to create a rental for.'
+      return
+    end
+
+    selected_person = select_person
+    selected_book = select_book
+
+    puts 'Enter rental date (YYYY-MM-DD):'
+    date = gets.chomp
+
+    rental = Rental.new(date, selected_book, selected_person)
+    @rentals << rental
+    puts "Rental created with ID: #{rental.id}"
   end
-
-  if @books.empty?
-    puts "No books available to create a rental for."
-    return
-  end
-
-  puts "Select a person from the following list by number (not ID):"
-  list_people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
-  person_number = gets.chomp.to_i
-
-  if person_number < 0 || person_number >= @people.length
-    puts "Invalid selection. Rental creation failed."
-    return
-  end
-
-  selected_person = @people[person_number]
-
-  puts "Select a book from the following list by number:"
-  list_books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
-  book_number = gets.chomp.to_i
-
-  if book_number < 0 || book_number >= @books.length
-    puts "Invalid selection. Rental creation failed."
-    return
-  end
-
-  selected_book = @books[book_number]
-
-  puts "Enter rental date (YYYY-MM-DD):"
-  date = gets.chomp
-
-  rental = Rental.new(date, selected_book, selected_person)
-  @rentals << rental
-  puts "Rental created with ID: #{rental.id}"
-end
 
   def list_rentals_for_person
     puts "Enter person's ID:"
@@ -116,7 +76,7 @@ end
     person = @people.find { |p| p.id == person_id }
 
     if person.nil?
-      puts "Person not found."
+      puts 'Person not found.'
       return
     end
 
@@ -125,5 +85,65 @@ end
     rentals.each do |rental|
       puts "ID: #{rental.id}, Book: #{rental.book.title}, Date: #{rental.date}"
     end
+  end
+
+  private
+
+  def create_student
+    puts "Enter student's name:"
+    name = gets.chomp
+    puts "Enter student's age:"
+    age = gets.chomp.to_i
+    parent_permission = ask_for_parent_permission
+    student = Student.new(age, name, parent_permission: parent_permission)
+    @people << student
+    puts "Student created with ID: #{student.id}"
+  end
+
+  def create_teacher
+    puts "Enter teacher's name:"
+    name = gets.chomp
+    puts "Enter teacher's age:"
+    age = gets.chomp.to_i
+    specialization = ask_for_teacher_specialization
+    teacher = Teacher.new(age, name, specialization)
+    @people << teacher
+    puts "Teacher created with ID: #{teacher.id}"
+  end
+
+  def ask_for_parent_permission
+    puts 'Is parent permission required? (y/n)'
+    gets.chomp.downcase == 'y'
+  end
+
+  def ask_for_teacher_specialization
+    puts "Enter teacher's specialization:"
+    gets.chomp
+  end
+
+  def select_person
+    puts 'Select a person from the following list by number (not ID):'
+    list_people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
+    person_number = gets.chomp.to_i
+
+    if person_number <= 0 || person_number >= @people.length
+      puts 'Invalid selection. Rental creation failed.'
+      return nil
+    end
+
+    @people[person_number]
+  end
+
+  def select_book
+    puts 'Select a book from the following list by number:'
+    list_books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
+    book_number = gets.chomp.to_i
+
+    if book_number <= 0 || book_number >= @books.length
+      puts 'Invalid selection. Rental creation failed.'
+      return nil
+    end
+
+    @books[book_number]
   end
 end

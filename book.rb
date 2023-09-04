@@ -12,10 +12,10 @@ class Book
   end
 
   def add_rental(person, date)
-    rental = Rental.new(date, person, self)
+    Rental.new(date, person, self)
   end
 
-   def generate_id
+  def generate_id
     SecureRandom.uuid
   end
 end
