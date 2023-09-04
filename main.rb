@@ -36,6 +36,7 @@ def list_rentals_for_person(app)
 end
 
 def exit_program
+  puts 'Thank you for using this app.'
   exit
 end
 
