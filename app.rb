@@ -23,34 +23,32 @@ class App
     end
   end
 
-  def create_person
-    puts "Is the person a Student(1) or a Teacher(2)? (Input the number)"
-    type = gets.chomp.to_i
+def create_person
+  puts "Is the person a Student(1) or a Teacher(2)? (Input the number)"
+  type = gets.chomp.to_i
+  puts "Enter person's name:"
+  name = gets.chomp
+  puts "Enter person's age:"
+  age = gets.chomp.to_i
+  puts "Is parent permission required? (y/n)"
+  parent_permission = gets.chomp.downcase == 'y'
 
-    if type == 1
-      puts "Enter student's name:"
-      name = gets.chomp
-      puts "Enter student's age:"
-      age = gets.chomp.to_i
-      puts "Is parent permission required? (y/n)"
-      parent_permission = gets.chomp.downcase == 'y'
-
-      student = Student.new(age, name, parent_permission: parent_permission)
-      @people << student
-      puts "Student created with ID: #{student.id}"
-    elsif type == 2
-      puts "Enter teacher's name:"
-      name = gets.chomp
-      puts "Enter teacher's age:"
-      age = gets.chomp.to_i
-
-      teacher = Teacher.new(age, name)
-      @people << teacher
-      puts "Teacher created with ID: #{teacher.id}"
-    else
-      puts "Invalid option. Person creation failed."
-    end
+  if type == 1
+    student = Student.new(age, name)
+    @people << student
+    puts "Student created with ID: #{student.id}"
+  elsif type == 2
+    person = Person.new(age, name)
+    @people << person
+    puts "Teacher created with ID: #{person.id}"
+  else
+    puts "Invalid option. Person creation failed."
   end
+end
+
+
+
+
 
   def create_book
     puts "Enter book's title:"
@@ -65,7 +63,7 @@ class App
 
   def create_rental
     puts "Enter person's ID:"
-    person_id = gets.chomp.to_i
+    person_id = gets.chomp
     person = @people.find { |p| p.id == person_id }
 
     if person.nil?
@@ -74,7 +72,7 @@ class App
     end
 
     puts "Enter book's ID:"
-    book_id = gets.chomp.to_i
+    book_id = gets.chomp
     book = @books.find { |b| b.id == book_id }
 
     if book.nil?
@@ -92,7 +90,7 @@ class App
 
   def list_rentals_for_person
     puts "Enter person's ID:"
-    person_id = gets.chomp.to_i
+    person_id = gets.chomp
     person = @people.find { |p| p.id == person_id }
 
     if person.nil?
@@ -100,7 +98,7 @@ class App
       return
     end
 
-    rentals = @rentals.select { |r| r.person.id == person.id }
+    rentals = @rentals.select { |r| r.person.id == person_id }
 
     rentals.each do |rental|
       puts "ID: #{rental.id}, Book: #{rental.book.title}, Date: #{rental.date}"
