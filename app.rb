@@ -57,7 +57,7 @@ class App
 
     return puts 'Invalid person selection. Rental creation failed.' if selected_person.nil?
 
-    date = get_rental_date
+    date = rental_date
     rental = create_new_rental(date, selected_book, selected_person)
 
     if add_rental_to_person(rental, selected_person)
