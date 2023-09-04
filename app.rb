@@ -48,40 +48,43 @@ class App
     puts "Book created with ID: #{book.id}"
   end
 
-def create_rental
-  if @people.empty?
-    puts 'No people available to create a rental for.'
-    return
+  def create_rental
+    return puts 'No people available to create a rental for.' if @people.empty?
+    return puts 'No books available to create a rental for.' if @books.empty?
+
+    selected_person = select_person
+    selected_book = select_book
+
+    return puts 'Invalid person selection. Rental creation failed.' if selected_person.nil?
+
+    date = get_rental_date
+    rental = create_new_rental(date, selected_book, selected_person)
+
+    if add_rental_to_person(rental, selected_person)
+      @rentals << rental
+      puts "Rental created with ID: #{rental.id}"
+    else
+      puts 'Error adding rental to person.'
+    end
   end
 
-  if @books.empty?
-    puts 'No books available to create a rental for.'
-    return
+  def rental_date
+    puts 'Enter rental date (YYYY-MM-DD):'
+    gets.chomp
   end
 
-  selected_person = select_person
-  selected_book = select_book
-
-  if selected_person.nil?
-    puts 'Invalid person selection. Rental creation failed.'
-    return
+  def create_new_rental(date, book, person)
+    Rental.new(date, book, person)
   end
 
-  puts 'Enter rental date (YYYY-MM-DD):'
-  date = gets.chomp
-
-  rental = Rental.new(date, selected_book, selected_person)
-
-  if selected_person.respond_to?(:rentals) && selected_person.rentals.is_a?(Array)
-    selected_person.rentals << rental
-  else
-    puts 'Error adding rental to person.'
+  def add_rental_to_person(rental, person)
+    if person.respond_to?(:rentals) && person.rentals.is_a?(Array)
+      person.rentals << rental
+      true
+    else
+      false
+    end
   end
-
-  @rentals << rental
-  puts "Rental created with ID: #{rental.id}"
-end
-
 
   def list_rentals_for_person
     puts "Enter person's ID:"
