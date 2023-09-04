@@ -1,16 +1,21 @@
 require_relative 'rental'
+require 'securerandom'
 class Book
+  attr_reader :id
   attr_accessor :title, :author, :rentals
 
   def initialize(title, author)
+    @id = generate_id
     @title = title
     @author = author
     @rentals = []
   end
 
   def add_rental(person, date)
-    rental = Rental.new(date, self, person)
-    rentals << rental
-    rental
+    Rental.new(date, person, self)
+  end
+
+  def generate_id
+    SecureRandom.uuid
   end
 end
