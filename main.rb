@@ -1,7 +1,7 @@
 require_relative 'app'
 
 def display_menu
-  puts 'Choose an option:'
+  puts 'Please choose an option by entering a number:'
   puts '1. List all books'
   puts '2. List all people'
   puts '3. Create a person'
@@ -35,7 +35,7 @@ def list_rentals_for_person(app)
   app.list_rentals_for_person
 end
 
-def exit_program
+def exit_program(_app = nil)
   puts 'Thank you for using this app.'
   exit
 end
