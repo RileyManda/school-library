@@ -134,17 +134,16 @@ class App
     @people[person_number]
   end
 
-def select_book
-  puts 'Select a book from the following list by number:'
-  list_books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
-  book_number = gets.chomp.to_i
+  def select_book
+    puts 'Select a book from the following list by number:'
+    list_books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
+    book_number = gets.chomp.to_i
 
-  if book_number < 0 || book_number >= @books.length
-    puts 'Invalid selection. Rental creation failed.'
-    return nil
+    if book_number.negative? || book_number >= @books.length
+      puts 'Invalid selection. Rental creation failed.'
+      return nil
+    end
+
+    @books[book_number]
   end
-
-  @books[book_number]
-end
-
 end
