@@ -26,25 +26,33 @@ class App
 def create_person
   puts "Is the person a Student(1) or a Teacher(2)? (Input the number)"
   type = gets.chomp.to_i
-  puts "Enter person's name:"
-  name = gets.chomp
-  puts "Enter person's age:"
-  age = gets.chomp.to_i
-  puts "Is parent permission required? (y/n)"
-  parent_permission = gets.chomp.downcase == 'y'
 
-  if type == 1
-    student = Student.new(age, name)
+  case type
+  when 1
+    puts "Enter student's name:"
+    name = gets.chomp
+    puts "Enter student's age:"
+    age = gets.chomp.to_i
+    puts "Is parent permission required? (y/n)"
+    parent_permission = gets.chomp.downcase == 'y'
+    student = Student.new(age, name, parent_permission: parent_permission)
     @people << student
     puts "Student created with ID: #{student.id}"
-  elsif type == 2
-    person = Person.new(age, name)
-    @people << person
-    puts "Teacher created with ID: #{person.id}"
+  when 2
+    puts "Enter teacher's name:"
+    name = gets.chomp
+    puts "Enter teacher's age:"
+    age = gets.chomp.to_i
+    puts "Enter teacher's specialization:"
+    specialization = gets.chomp
+    teacher = Teacher.new(age, name, specialization)
+    @people << teacher
+    puts "Teacher created with ID: #{teacher.id}"
   else
     puts "Invalid option. Person creation failed."
   end
 end
+
 
 
 
@@ -62,31 +70,45 @@ end
   end
 
   def create_rental
-    puts "Enter person's ID:"
-    person_id = gets.chomp
-    person = @people.find { |p| p.id == person_id }
-
-    if person.nil?
-      puts "Person not found. Rental creation failed."
-      return
-    end
-
-    puts "Enter book's ID:"
-    book_id = gets.chomp
-    book = @books.find { |b| b.id == book_id }
-
-    if book.nil?
-      puts "Book not found. Rental creation failed."
-      return
-    end
-
-    puts "Enter rental date (YYYY-MM-DD):"
-    date = gets.chomp
-
-    rental = Rental.new(date, book, person)
-    @rentals << rental
-    puts "Rental created with ID: #{rental.id}"
+  if @people.empty?
+    puts "No people available to create a rental for."
+    return
   end
+
+  if @books.empty?
+    puts "No books available to create a rental for."
+    return
+  end
+
+  puts "Select a person from the following list by number (not ID):"
+  list_people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
+  person_number = gets.chomp.to_i
+
+  if person_number < 0 || person_number >= @people.length
+    puts "Invalid selection. Rental creation failed."
+    return
+  end
+
+  selected_person = @people[person_number]
+
+  puts "Select a book from the following list by number:"
+  list_books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
+  book_number = gets.chomp.to_i
+
+  if book_number < 0 || book_number >= @books.length
+    puts "Invalid selection. Rental creation failed."
+    return
+  end
+
+  selected_book = @books[book_number]
+
+  puts "Enter rental date (YYYY-MM-DD):"
+  date = gets.chomp
+
+  rental = Rental.new(date, selected_book, selected_person)
+  @rentals << rental
+  puts "Rental created with ID: #{rental.id}"
+end
 
   def list_rentals_for_person
     puts "Enter person's ID:"
