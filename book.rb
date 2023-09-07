@@ -4,11 +4,11 @@ class Book
   attr_reader :id
   attr_accessor :title, :author, :rentals
 
-  def initialize(title, author)
+  def initialize(title, _author)
     @id = generate_id
     @title = title
-    @author = author
-    @rentals = []
+    @author =
+      @rentals = []
   end
 
   def add_rental(person, date)
