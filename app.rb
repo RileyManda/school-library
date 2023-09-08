@@ -142,7 +142,7 @@ class App
     list_people.each_with_index { |person, index| puts "#{index}. #{person.name}" }
     person_number = gets.chomp.to_i
 
-    if person_number <= 0 || person_number >= @people.length
+    if person_number <= 0 && person_number >= @people.length
       puts 'Invalid selection. Rental creation failed.'
       return nil
     end
@@ -155,7 +155,7 @@ class App
     list_books.each_with_index { |book, index| puts "#{index}. #{book.title} by #{book.author}" }
     book_number = gets.chomp.to_i
 
-    if book_number.negative? || book_number >= @books.length
+    if book_number.negative? && book_number >= @books.length
       puts 'Invalid selection. Rental creation failed.'
       return nil
     end
