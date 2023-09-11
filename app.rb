@@ -3,12 +3,14 @@ require_relative 'book'
 require_relative 'student'
 require_relative 'teacher'
 require_relative 'rental'
+require 'json'
 
 class App
   def initialize
     @books = []
     @people = []
     @rentals = []
+    load_data
   end
 
   def list_books
@@ -103,6 +105,20 @@ class App
     end
   end
 
+    def save_data
+    File.write('books.json', JSON.generate(@books))
+    File.write('./people.json', JSON.generate(@people))
+    File.write('rentals.json', JSON.generate(@rentals))
+    puts 'Data saved successfully.'
+  end
+
+  def load_data
+    @books = JSON.parse(File.read('books.json')) if File.exist?('books.json')
+    @people = JSON.parse(File.read('people.json')) if File.exist?('people.json')
+    @rentals = JSON.parse(File.read('rentals.json')) if File.exist?('rentals.json')
+    puts 'Data loaded successfully.'
+  end
+
   private
 
   def create_student
@@ -162,4 +178,5 @@ class App
 
     @books[book_number]
   end
+
 end

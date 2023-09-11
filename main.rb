@@ -1,4 +1,5 @@
 require_relative 'app'
+require 'json'
 
 def display_menu
   puts 'Please choose an option by entering a number:'
@@ -61,11 +62,14 @@ end
 
 def main
   app = App.new
-
   loop do
     display_menu
     option = gets.chomp.to_i
     execute_option(app, option)
+    if option == 7
+      app.save_data # Save data only when quitting the application
+      break
+    end
   end
 end
 
